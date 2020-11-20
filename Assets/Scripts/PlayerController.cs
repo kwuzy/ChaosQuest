@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour
     private float veritcalMove = 0f;
     public Animator playerAnim;
     
+    private void Start() {
+        movement = GameObject.FindWithTag("Movement Joystick").GetComponent<FixedJoystick>();
+        action = GameObject.FindWithTag("Action Joystick").GetComponent<FixedJoystick>();
+    }
+    
     void Update()
     {
         horizontalMove = movement.Horizontal;
@@ -21,24 +26,21 @@ public class PlayerController : MonoBehaviour
         Vector2 actionVector = new Vector2(action.Horizontal,action.Vertical);
 
         //moving animation
-        if(actionVector == Vector2.zero) {
-            playerAnim.SetFloat("moveX", playerRB.velocity.x);
-            playerAnim.SetFloat("moveY", playerRB.velocity.y);
-        } else {
-            playerAnim.SetFloat("moveX", actionVector.x);
-            playerAnim.SetFloat("moveY", actionVector.y);
-        }
+        playerAnim.SetFloat("moveX", playerRB.velocity.x);
+        playerAnim.SetFloat("moveY", playerRB.velocity.y);
 
+        //action animation
+        //when we have attack animations create new parameters in the animation file and change moveX and moveY to those
+        playerAnim.SetFloat("actionX", actionVector.x);
+        playerAnim.SetFloat("actionY", actionVector.y);
+        
         //idle animation
-        if (horizontalMove > 0.1 || horizontalMove < -0.1 || veritcalMove > 0.1 || veritcalMove < -0.1) {
-            if(action.Horizontal > 0.1 || action.Horizontal < -0.1 || action.Vertical > 0.1 || action.Vertical < -0.1) {
-                playerAnim.SetFloat("lastX",action.Horizontal);
-                playerAnim.SetFloat("lastY",action.Vertical);
-            } else {
-                playerAnim.SetFloat("lastX",horizontalMove);
-                playerAnim.SetFloat("lastY",veritcalMove);
-            }
+        if (action.Horizontal > 0.1 || action.Horizontal < -0.1 || action.Vertical > 0.1 || action.Vertical < -0.1) {
+            playerAnim.SetFloat("lastX",action.Horizontal);
+            playerAnim.SetFloat("lastY",action.Vertical);
+        } else if (horizontalMove > 0.1 || horizontalMove < -0.1 || veritcalMove > 0.1 || veritcalMove < -0.1) {
+            playerAnim.SetFloat("lastX",horizontalMove);
+            playerAnim.SetFloat("lastY",veritcalMove);
         }
-
     }
 }
