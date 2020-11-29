@@ -7,17 +7,22 @@ public class PlayerController : MonoBehaviour
     public Joystick movement;
     public Joystick action;
     public Rigidbody2D playerRB;
-    public Rigidbody2D firePoint;
+    public Rigidbody2D firePointRB;
     private float moveSpeed = 5f;
     private float horizontalMove = 0f;
     private float veritcalMove = 0f;
     public Animator playerAnim;
+    [Header("Shooting")]
     public float reloadSpeed = 50f;
     public float maxClip = 200f;
     public float currentClip;
     public float fireMinimum = 100f;
     public float recoilTime = 1f;
     public float currentRecoil = 0f;
+    public Transform firePointTransform;
+    public GameObject bulletPrefab;
+    public float bulletForce = 20f;
+
     
 
     
@@ -31,7 +36,9 @@ public class PlayerController : MonoBehaviour
         horizontalMove = movement.Horizontal;
         veritcalMove = movement.Vertical;
 
+        //moves player and firepoint
         playerRB.velocity = new Vector2(horizontalMove,veritcalMove) * moveSpeed;
+        firePointRB.velocity = new Vector2(horizontalMove,veritcalMove) * moveSpeed;
         Vector2 actionVector = new Vector2(action.Horizontal,action.Vertical);
 
         //moving animation
@@ -42,8 +49,8 @@ public class PlayerController : MonoBehaviour
         //when we have attack animations create new parameters in the animation file and change moveX and moveY to those
         playerAnim.SetFloat("actionX", actionVector.x);
         playerAnim.SetFloat("actionY", actionVector.y);
-        float angle = Mathf.Atan2(action.Vertical, action.Horizontal) * Mathf.Rad2Deg;
-        firePoint.rotation = angle;
+        float angle = Mathf.Atan2(action.Vertical, action.Horizontal) * Mathf.Rad2Deg - 90f;
+        firePointRB.rotation = angle;
         
         //idle animation
         if (action.Horizontal > 0.1 || action.Horizontal < -0.1 || action.Vertical > 0.1 || action.Vertical < -0.1) {
@@ -58,9 +65,7 @@ public class PlayerController : MonoBehaviour
         if (actionVector != Vector2.zero) {
             if (currentClip >= fireMinimum) {
                 if (currentRecoil <= 0f) {
-                    //code to fire
-                    
-                    
+                    Shoot();
                     currentRecoil = recoilTime;
                     currentClip -= fireMinimum;
                 }
@@ -79,5 +84,12 @@ public class PlayerController : MonoBehaviour
         if(currentRecoil > 0) {
             currentRecoil -= Time.deltaTime;
         }
+    }
+
+    public void Shoot() {
+        Debug.Log("firepoint.up: " + firePointTransform.up);
+        GameObject bullet = Instantiate(bulletPrefab, firePointTransform.position, firePointTransform.rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.AddForce(firePointTransform.up * bulletForce, ForceMode2D.Impulse);
     }
 }

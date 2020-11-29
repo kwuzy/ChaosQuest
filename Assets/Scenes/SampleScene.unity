@@ -272,6 +272,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &855381209 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 2550448922394504362, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+  m_PrefabInstance: {fileID: 1698942426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &855381210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1759920430, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+  m_PrefabInstance: {fileID: 1698942426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1276315190
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +371,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1759920430, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759920430, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1973160360477637767, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: firePointTransform
+      value: 
+      objectReference: {fileID: 855381210}
+    - target: {fileID: 1973160360477637767, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 7264120179312704490, guid: 678bdf0dbeb091b45a0c6f4775334001, type: 3}
+    - target: {fileID: 1973160360477637767, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: firePointRB
+      value: 
+      objectReference: {fileID: 855381209}
     - target: {fileID: 1973160360477637769, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.912
