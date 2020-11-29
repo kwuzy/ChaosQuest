@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public Joystick movement;
     public Joystick action;
     public Rigidbody2D playerRB;
-    public Rigidbody2D firePointRB;
     private float moveSpeed = 5f;
     private float horizontalMove = 0f;
     private float veritcalMove = 0f;
@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     public float bulletForce = 20f;
 
     
-
-    
     private void Start() {
         movement = GameObject.FindWithTag("Movement Joystick").GetComponent<FixedJoystick>();
         action = GameObject.FindWithTag("Action Joystick").GetComponent<FixedJoystick>();
@@ -36,9 +34,8 @@ public class PlayerController : MonoBehaviour
         horizontalMove = movement.Horizontal;
         veritcalMove = movement.Vertical;
 
-        //moves player and firepoint
+        //moves player
         playerRB.velocity = new Vector2(horizontalMove,veritcalMove) * moveSpeed;
-        firePointRB.velocity = new Vector2(horizontalMove,veritcalMove) * moveSpeed;
         Vector2 actionVector = new Vector2(action.Horizontal,action.Vertical);
 
         //moving animation
@@ -46,11 +43,11 @@ public class PlayerController : MonoBehaviour
         playerAnim.SetFloat("moveY", playerRB.velocity.y);
 
         //action animation
-        //when we have attack animations create new parameters in the animation file and change moveX and moveY to those
         playerAnim.SetFloat("actionX", actionVector.x);
         playerAnim.SetFloat("actionY", actionVector.y);
+        //set firepoint angle based on action joystick
         float angle = Mathf.Atan2(action.Vertical, action.Horizontal) * Mathf.Rad2Deg - 90f;
-        firePointRB.rotation = angle;
+        firePointTransform.rotation = Quaternion.Euler(0f, 0f, angle);
         
         //idle animation
         if (action.Horizontal > 0.1 || action.Horizontal < -0.1 || action.Vertical > 0.1 || action.Vertical < -0.1) {
@@ -87,7 +84,6 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Shoot() {
-        Debug.Log("firepoint.up: " + firePointTransform.up);
         GameObject bullet = Instantiate(bulletPrefab, firePointTransform.position, firePointTransform.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePointTransform.up * bulletForce, ForceMode2D.Impulse);
