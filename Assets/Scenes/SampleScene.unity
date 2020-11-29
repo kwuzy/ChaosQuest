@@ -439,6 +439,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Volt
       objectReference: {fileID: 0}
+    - target: {fileID: 2550448922394504362, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab3dc3331deb0ab4f8a074f42210144b, type: 3}
 --- !u!1001 &7962672199121650480
