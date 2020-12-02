@@ -13,7 +13,11 @@ public class CameraController : MonoBehaviour
     private float halfWidth;
 
     void Start() {
-        target = PlayerController.instance.transform;
+
+        //this will be uncommented
+        //target = PlayerController.instance.transform;
+
+
         //target = FindObjectOfType<PlayerController>().transform;
 
         halfHeight = Camera.main.orthographicSize;
@@ -22,7 +26,8 @@ public class CameraController : MonoBehaviour
         bottomLeftLimit = theMap.localBounds.min + new Vector3(halfWidth, halfHeight, 0f);
         topRightLimit = theMap.localBounds.max - new Vector3(halfWidth, halfHeight - 0.9f, 0f);
 
-        PlayerController.instance.SetBounds(theMap.localBounds.min, theMap.localBounds.max);
+        //this will be uncommented
+        //PlayerController.instance.SetBounds(theMap.localBounds.min, theMap.localBounds.max);
     }
 
     void LateUpdate() {
